@@ -1,0 +1,35 @@
+
+
+.Task{margin-top: 2%;}
+.input_task {height: 40px; border:solid whitesmoke thin;}
+.button_set {  
+               height: 40px;
+               width: 60px;
+               background-color: rgba(0,128,0,0.9);
+               color: white;
+               margin-left: 1%;
+               text-align: center;
+            }
+.div_task_name{background-color: white; 
+               color:green;
+               background-color:rgba(245,245,245,0.6);
+               height:auto;  
+               overflow-x: hidden;
+               text-align: justify;
+               overflow-wrap: break-word;
+               line-break: auto;
+               font-weight: bold;
+               cursor: pointer;
+               
+               transition: background-color 0.2s;
+                }
+.div_task_name:hover {background-color:rgba(0,128,0,0.1);}
+
+.action i {cursor: pointer;color: rgba(0,0,0,0.7); font-size: 1.2em;}
+.action:hover >i{color: green;}
+
+.completed {text-decoration: line-through black;
+            text-decoration-thickness: 1.5px;
+            }
+
+.clicked i {color: green;}
