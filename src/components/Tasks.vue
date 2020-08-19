@@ -1,27 +1,17 @@
 <template>
     <div id="Tasks">
-    
-    <div class='container'>
-        <div class='container'>
-             <div class='row'>
-            
-                <button v-on:click='add'>+</button> <div id='div_button_label'>New Task</div>
-                
-             </div>
+      <div class='container'>
+          <div class='container'>
+              <div class='row'>
+                  <button v-on:click='add'>+</button> 
+                  <div class='div_button_label'>New Task</div>
+              </div>
 
-             <div class='row' v-for='task in taskCounter' :key="task">
-                
-                <Task v-bind:taskCounter='taskCounter' />
-                
-            </div>
-
-         </div>
-
-    </div>
-    
-    
-    
-    
+              <div class='row' v-for='task in taskCounter' :key="task"> 
+                  <Task v-bind:taskCounter='taskCounter' />
+              </div>
+          </div>
+      </div> 
   </div>
 </template>
 
@@ -29,9 +19,7 @@
 
 import Task from './Task.vue';
 
-
 export default {
-
 
   name: 'Tasks',
 
@@ -49,15 +37,8 @@ export default {
       add:function(){
       
           this.taskCounter++;
-          
-
       }
-    
-
-  }
-
-  
-  
+  } 
 }
 </script>
 
