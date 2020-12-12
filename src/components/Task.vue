@@ -39,6 +39,8 @@ export default {
   name: 'Task',
 
   mounted:function(){
+
+      
       let taskInputs=document.getElementsByClassName('input_task');
       let n=taskInputs.length;
       if(n>0)
@@ -46,24 +48,40 @@ export default {
           taskInputs[n-1].focus();
       }  
       
+
   }
   ,
 
   data:function(){return {
+      
       isRemoved:false,
       isBlank:true,
-      isSet:false,
-      title:'',
+      isSet:this.set,
+      editing: false,
+      title:this.task,
+      counter:this.taskCounter,
       checked:'completed',
       remove:'remove task',
-      completed:false,
-      clicked:false
+      completed:(()=>{
+          if(this.isCompleted)
+            {
+                return this.isCompleted;
+            }
+        else
+            {
+                return false;
+            }
+      })()
+      
+                ,
+      clicked:false,
 
+       
     }
   
   },
 
-  props:['taskCounter'],
+  props:['taskCounter','task','set','isCompleted'],
 
   
   methods:{
@@ -82,28 +100,162 @@ export default {
                 this.title='';      
             }
           },
+    //adds the task to the list in the page          
     setTask:function(){
         
         this.isSet=true;
         this.isBlank=true;
+        let tasks;
+        let task;
+        let tasksArray;
 
+        task=this.title+'isCompleted'+this.completed;
 
-        
+        if(localStorage.getItem('tasks')) //tasks already exist in localStorage
+        {
+            tasks=localStorage.getItem('tasks');
+            task=this.title+'isCompleted'+this.completed;
+            
+            //splitting tasks
+            tasksArray=tasks.split(',');
+            //controls if new task is added or if existing one is modified
+            if(this.editing==true)
+                { 
+
+                    let newTasks='';
+
+                    //replace array item with edited task
+                    let replaceIndex=(this.counter)-1;
+                    tasksArray[replaceIndex]=task;
+
+                    let c;             
+                    for(c=0;c<tasksArray.length;c++)
+                    {
+                       if(c==0)
+                        {
+                            newTasks=newTasks+tasksArray[c];
+                        }
+                        else
+                        {
+                            newTasks=newTasks+','+tasksArray[c];
+                        }
+                        
+                    }
+                    
+                    localStorage.setItem('tasks',newTasks);
+                    
+                    this.editing=false;
+                }
+            else
+            {
+                tasks=tasks+','+task;
+                localStorage.setItem('tasks',tasks);
+            }
+            
+        }
+        else
+        {            
+            
+            localStorage.setItem('tasks',task);
+        }
+
+    console.log(localStorage.getItem('tasks'));
     },
+
+
+    //edits task
     edit:function(){
         this.isSet=false;
         this.isBlank=false;
         this.completed=false;
+        this.editing=true;
     },
 
     check:function(){
+        
         this.completed=!this.completed;
         this.clicked=!this.clicked;
+        
+        //change the 'isCompleted' part in the localStorage
+        let tasks=localStorage.getItem('tasks');
+        
+        let tasksArray=tasks.split(',');
+        
+        let task=this.title+'isCompleted'+this.completed;
+        
+        
+        
+    
+        //replace array item with edited task
+        let replaceIndex=((this.counter)-1);
+        tasksArray[replaceIndex]=task;     
+
+        
+        let c;             
+        let newTasks='';
+        for(c=0;c<tasksArray.length;c++)
+        {
+            if(c==0)
+            {
+                newTasks=newTasks+tasksArray[c];
+            }
+            else
+            {
+                newTasks=newTasks+','+tasksArray[c];
+            }
+            
+            
+        }
+
+        
+        localStorage.setItem('tasks',newTasks);
+        
     },
 
     removeTask:function(){
-        
         this.isRemoved=true;
+        this.counter--;
+        
+
+        this.$emit('updateCounter')
+
+        let tasks= localStorage.getItem('tasks');
+        let tasksArray=tasks.split(',');
+
+
+        let removeIndex=(this.counter); 
+        
+        tasksArray.splice(removeIndex,1);
+        //re-populate local storage with the updated number of tasks        
+        let counter;
+        let newTasks='';
+        for (counter=0;counter<tasksArray.length;counter++)
+            {
+            
+                if(counter==0)
+                    {
+                        newTasks=newTasks+tasksArray[counter];
+                    }
+                else
+                    {
+                        newTasks=newTasks+','+tasksArray[counter];
+                    }
+            
+            }
+        
+        localStorage.setItem('tasks',newTasks);
+
+        let itemsLeft=document.getElementsByClassName('task').length;
+        
+        
+        // clear localStorage if all the tasks are deleted
+        if(itemsLeft==1)
+        {
+            
+            localStorage.clear();
+        }
+         
+     
     }
   }
 }
