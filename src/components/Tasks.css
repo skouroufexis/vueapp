@@ -16,7 +16,7 @@ button:hover + .div_button_label { color: green; }
            
             }
 
-#Tasks {border: solid red thin;
+#Tasks {
         overflow-y: scroll;
         height: 60vh;
 
