@@ -20,5 +20,8 @@ button:hover + .div_button_label { color: green; }
         overflow-y: scroll;
         height: 60vh;
 
-        margin-top: 60px; margin-bottom: 2%;}
+        margin-top: 60px; margin-bottom: 2%;
+}
+
+.Task{margin-top: 2%;}
 
