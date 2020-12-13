@@ -1,7 +1,11 @@
 
 
 .Task{margin-top: 2%;}
-.input_task {height: 40px; border:solid whitesmoke thin;}
+.input_task {
+             height: 40px; border:solid whitesmoke thin;
+             outline: none;  
+            
+               }
 .button_set {  
                height: 40px;
                width: 60px;
@@ -33,3 +37,4 @@
             }
 
 .clicked i {color: green;}
+::placeholder {font-size: small;}
